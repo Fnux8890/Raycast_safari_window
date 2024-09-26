@@ -16,9 +16,10 @@ export default async function Command() {
 
     // Close the Raycast window after the action completes
     await closeMainWindow();
-  } catch (error) {
+  } catch (error: unknown) {
     // Handle any errors and show failure toast
-    await showToast(ToastStyle.Failure, "Failed to Open Safari Window", error.message);
+    const errorMessage = error instanceof Error ? error.message : "Unknown error";
+    await showToast(ToastStyle.Failure, "Failed to Open Safari Window", errorMessage);
 
     // Ensure the Raycast window is closed even if an error occurs
     await closeMainWindow();
